@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+tasks.withType(JavaCompile) {
+    options.fork = true
+}
+
+sourceCompatibility = 1.8
+group 'com.my.lib'
+version '1.3.5'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+}
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': 'by.epam.com.Main',
+                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' '))
+    } archiveName 'utils-1.3.5.jar'
+}
+
+
+
+
+
